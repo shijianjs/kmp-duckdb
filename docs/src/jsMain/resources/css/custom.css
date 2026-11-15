@@ -1,0 +1,37 @@
+/* The site's accent matches the logo: a gold arrow on a dark database block. */
+:root {
+    --ifm-color-primary: #b8860b;
+    --ifm-color-primary-dark: #a67909;
+    --ifm-color-primary-darker: #9c7209;
+    --ifm-color-primary-darkest: #815e07;
+    --ifm-color-primary-light: #cc9410;
+    --ifm-color-primary-lighter: #d69b13;
+    --ifm-color-primary-lightest: #e8ad2b;
+}
+
+[data-theme='dark'] {
+    --ifm-color-primary: #f2c14e;
+    --ifm-color-primary-dark: #efb733;
+    --ifm-color-primary-darker: #edb226;
+    --ifm-color-primary-darkest: #d99c12;
+    --ifm-color-primary-light: #f5cb69;
+    --ifm-color-primary-lighter: #f7d076;
+    --ifm-color-primary-lightest: #fadf9e;
+    --ifm-background-color: #0f1419;
+}
+
+/* The three modules are the first thing a reader needs, so the tables get a readable minimum. */
+table {
+    display: table;
+    width: 100%;
+}
+
+table td,
+table th {
+    vertical-align: top;
+}
+
+/* Long Kotlin identifiers in API tables would otherwise push the page sideways. */
+.markdown td code {
+    word-break: break-word;
+}
