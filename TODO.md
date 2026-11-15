@@ -6,9 +6,9 @@
 本阶段只做 JS 目标。
 
 - 总计：114
-- 已完成：65
+- 已完成：67
 - 明确不做：7
-- 待完成：42
+- 待完成：40
 
 详细清单：[coverage.md](docs/development/coverage.md)
 分模块清单：[arrow-coverage.md](docs/development/arrow-coverage.md)、
@@ -18,13 +18,19 @@
 
 ### 当前待办
 
-- [ ] 跑一次 `./gradlew pagesSite`，确认 `/`、`/demo/`、`/api/` 三处产物齐全（Dokka 首次运行要下载依赖）。
-- [ ] 推仓后在 GitHub 上手动触发 `ci.yml`，确认 Ubuntu + JDK 21 下 `build`、`pagesSite`、`:demo:e2eTest` 通过。
+- [ ] 首次发布：修订号已就位，等 API 稳定后按 `release.yml` 走 hub 注册。
+- [ ] `ktjs-duckdb-wasm` 的独立运行时测试（`selectBundle` 分支、OPFS、`copyFileTo*`）。
 - [ ] Arrow 待完成的 10 项（构造器子类、IPC reader/writer、`Visitor`、`compressionRegistry` 等），
       见 [arrow-coverage.md](docs/development/arrow-coverage.md#待完成)。
 - [ ] Node 待完成的 28 项（`DuckDBAppender`、`DuckDBValue` 包装类型、自定义函数 API 等），
       见 [node-api-coverage.md](docs/development/node-api-coverage.md#待完成)。
-- [ ] 首次发布：修订号已就位，等 API 稳定后按 `release.yml` 走 hub 注册。
+
+### 已验证
+
+- 本地：`:ktjs-apache-arrow:jsBrowserTest` 10 passed、`:ktjs-duckdb-node-neo:jsNodeTest` 3 passed、
+  `:demo:e2eTest` 5 passed、`:docs:docusaurusBuild` 两个 locale 通过、`pagesSite` 通过。
+- GitHub Actions：`ci.yml` 全绿；`pages.yml` 已发布 <https://shijianjs.github.io/kmp-duckdb/>（文档在根、
+  demo 在 `/demo/`、API 在 `/api/`，中文在 `/zh-Hans/`）。
 
 ### 注意事项
 

@@ -15,9 +15,9 @@
 | 状态 | 数量 |
 | --- | ---: |
 | 总计 | 114 |
-| 已完成 | 65 |
+| 已完成 | 67 |
 | 明确不做 | 7 |
-| 待完成 | 42 |
+| 待完成 | 40 |
 
 分模块：
 
@@ -26,7 +26,7 @@
 | Arrow | 50 | 39 | 1 | 10 |
 | DuckDB WASM | 7 | 6 | 1 | 0 |
 | DuckDB Node | 45 | 12 | 5 | 28 |
-| 项目事项 | 12 | 8 | 0 | 4 |
+| 项目事项 | 12 | 10 | 0 | 2 |
 
 WASM 的 7 项按「上游 `packages/duckdb-wasm/src/index.ts` 导出的子模块」计数：`bindings`、`log`、`parallel`、
 `status`、`platform`、`version`、`worker`。其中 `parallel` 排除（只导出内部线程池配置常量，语义已由
@@ -49,13 +49,12 @@ WASM 的 7 项按「上游 `packages/duckdb-wasm/src/index.ts` 导出的子模�
 6. demo e2e 套件（5 个用例，Playwright + 打包产物）。
 7. 文档站（中英双语，`docusaurusBuild` 两个 locale 均通过）。
 8. README（根与三个模块，各中英两份）、`AGENTS.md`、`TODO.md`、`docs/development/*`。
+9. `pagesSite`：根目录文档、`/demo/`、`/api/`（Dokka 聚合）三处产物齐全，本地与 Actions 均通过。
+10. GitHub 仓库、Pages（`build_type=workflow`）与首次 CI 运行（Ubuntu + JDK 21 下 `build`、`pagesSite`、
+    `:demo:e2eTest` 全绿）。
 
 待完成：
 
-- [ ] `:docs:docusaurusBuild` 之后跑一次 `pagesSite`，确认根目录、`/demo/`、`/api/` 三处内容都在
-      （Dokka 聚合任务 `dokkaGeneratePublicationHtml` 首次运行需要下载依赖，单独验证）。
-- [ ] 在 GitHub 上首次运行 CI（`gh workflow run ci.yml`）并确认 `pagesSite` 与 `:demo:e2eTest` 在
-      Ubuntu + JDK 21 下通过。
 - [ ] 首次发布（`release.yml` → hub），本阶段不触发：仓库刚建，等 API 稳定后再发。
 - [ ] `ktjs-duckdb-wasm` 的独立运行时测试（见上文说明，优先级低于其余项）。
 
@@ -67,6 +66,9 @@ WASM 的 7 项按「上游 `packages/duckdb-wasm/src/index.ts` 导出的子模�
 | `:ktjs-duckdb-node-neo:jsNodeTest` | 3 passed（Node） |
 | `:demo:e2eTest` | 5 passed（Playwright / Chromium，打包产物） |
 | `:docs:docusaurusBuild` | en + zh-Hans 均 SUCCESS |
+| `pagesSite` | 本地 SUCCESS；`build/pages` 下 `index.html`、`demo/`（含 `duckdb/*.wasm`）、`api/` 齐全 |
+| `ci.yml`（GitHub Actions，Ubuntu + JDK 21） | success：`build`、`pagesSite`、`:demo:e2eTest` |
+| `pages.yml`（GitHub Actions） | success：已发布到 <https://shijianjs.github.io/kmp-duckdb/> |
 | `compileKotlinJs`（三模块 + demo） | OK |
 
 ## 统计口径
