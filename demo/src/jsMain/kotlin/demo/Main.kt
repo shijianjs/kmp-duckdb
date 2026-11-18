@@ -47,7 +47,7 @@ fun main() {
     val header = document.createElement(HtmlTagName.header).apply { className = ClassName("header") }
     val logo = document.createElement(HtmlTagName.img).apply {
         className = ClassName("logo")
-        setAttribute("src", "img/kmp-duckdb-logo.svg")
+        setAttribute("src", "img/kmp-duckdb-logo.png")
         setAttribute("alt", "$PROJECT_NAME logo")
     }
     val heading = document.createElement(HtmlTagName.h1)

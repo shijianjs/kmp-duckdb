@@ -32,8 +32,11 @@
   `docs/src/jsMain/resources/i18n/zh-Hans/docusaurus-plugin-content-docs/current/**`），由
   [ktjs-docusaurus](https://github.com/shijianjs/ktjs-docusaurus) 的 Gradle 插件组装并调用 Docusaurus CLI。
   `baseUrl` 是 `/kmp-duckdb/`，导航里 Demo 与 API 的跳转由 `Config.kt` 的常量推出来，改布局要一起改。
-- Logo 只有一份（`docs/src/jsMain/resources/static/img/kmp-duckdb-logo.svg`），demo 用 `brandAssets` 任务拷进
+- Logo 只有一份（`docs/src/jsMain/resources/static/img/kmp-duckdb-logo.png`），demo 用 `brandAssets` 任务拷进
   自己的资源；DuckDB 的 wasm 与 worker 由 `duckdbAssets` 从安装好的 npm 包拷入，页面不依赖 CDN。
+- 落地页 `docs/src/jsMain/resources/pages/index.mdx` 用 `ktjs-docusaurus-kit` 的 `<ktjs-hero>` / `<ktjs-features>` / `<ktjs-next-steps>`；
+  这些元素和右侧目录折叠 `TocToggle` 的浏览器 bundle 由 `kitBundle` + `extractKitBundle` 拷到 `static/ktjs-client/`，
+  再由 `ClientModule.kt` 在 hydration 之后加载（`Config.kt` 的 `clientModules` 列出生成出来的 `./client-module.mjs`）。
 
 ## 构建与测试
 

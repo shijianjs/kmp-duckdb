@@ -1,7 +1,6 @@
 ---
 id: intro
 title: kmp-duckdb
-slug: /
 sidebar_position: 1
 ---
 
@@ -35,10 +34,10 @@ tables — so the arrow module is the common vocabulary of the other two.
 
 ## Where to go next
 
-- **[Getting started](guide/getting-started)** — add the modules to a project and run a first query.
-- **[Apache Arrow](guide/apache-arrow)** — how a table is built, read and serialized.
-- **[DuckDB WASM](guide/duckdb-wasm)** — instantiating the database in a browser page.
-- **[DuckDB Node](guide/duckdb-node)** — the native Node client.
+- **[Getting started](../guide/getting-started)** — add the modules to a project and run a first query.
+- **[Apache Arrow](../guide/apache-arrow)** — how a table is built, read and serialized.
+- **[DuckDB WASM](../guide/duckdb-wasm)** — instantiating the database in a browser page.
+- **[DuckDB Node](../guide/duckdb-node)** — the native Node client.
 - **[Demo](https://shijianjs.github.io/kmp-duckdb/demo/)** — the same code running in a page.
 - **[API reference](https://shijianjs.github.io/kmp-duckdb/api/)** — the generated Dokka pages.
 

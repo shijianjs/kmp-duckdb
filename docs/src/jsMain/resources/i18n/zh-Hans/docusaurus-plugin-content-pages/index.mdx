@@ -1,0 +1,54 @@
+---
+title: kmp-duckdb
+description: DuckDB 与 Apache Arrow 的 Kotlin/JS 封装
+hide_table_of_contents: true
+---
+
+import logo from '@site/static/img/kmp-duckdb-logo.png';
+
+{/* `<ktjs-…>` 分区来自 ktjs-docusaurus 的工具箱：Gradle 插件把它的 bundle 放到 `static/ktjs-client/`，
+    `ClientModule.kt` 在页面 hydrate 之后加载它。`href` 写成相对路径，两种 locale 前缀下都能用；
+    `logo` 用 import 取，这样 URL 会带上本站实际的 `baseUrl`。 */}
+
+<ktjs-hero logo-src={logo} title="kmp-duckdb" tagline="DuckDB 与 Apache Arrow 的 Kotlin/JS 封装">
+
+<ktjs-action kind="primary" href="guide/getting-started">开始阅读</ktjs-action>
+
+<ktjs-action kind="secondary" href="https://github.com/shijianjs/kmp-duckdb" icon="simple-icons:github">GitHub</ktjs-action>
+
+<ktjs-badge href="https://github.com/shijianjs/kmp-duckdb/blob/master/LICENSE" src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></ktjs-badge>
+
+<ktjs-badge href="https://github.com/shijianjs/kmp-duckdb" src="https://img.shields.io/badge/Kotlin%2FJS-2.4.21-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin/JS"></ktjs-badge>
+</ktjs-hero>
+
+<ktjs-features section-title="三个模块，同一条规则" tinted>
+
+<ktjs-feature icon="lucide:database" title="浏览器里的 DuckDB">`ktjs-duckdb-wasm` 声明 `@duckdb/duckdb-wasm`：异步数据库句柄、连接、预编译语句、文件登记与 bundle 选择辅助。</ktjs-feature>
+
+<ktjs-feature icon="lucide:server" title="服务端的 DuckDB">`ktjs-duckdb-node-neo` 声明 `@duckdb/node-api`：真正的线程与文件，CommonJS 的运行时导出形状已经替你处理。</ktjs-feature>
+
+<ktjs-feature icon="lucide:table" title="结果是 Arrow">`ktjs-apache-arrow` 声明 `apache-arrow`，也就是 DuckDB 返回结果所用的格式——schema、向量、record batch 与 IPC 函数。</ktjs-feature>
+
+<ktjs-feature icon="lucide:shield-check" title="类型化，不是 `JsAny`">`Type` 枚举成员不是 `Double`，`'file' | 'stream'` 参数不是 `String`，列向量按它的值类型而不是按 `JsAny` 建模。</ktjs-feature>
+
+<ktjs-feature icon="lucide:boxes" title="按上游边界拆分">三个包运行在不同环境、演进节奏也不同，所以封装保持三个模块，而不是捆成一个。</ktjs-feature>
+
+<ktjs-feature icon="lucide:flask-conical" title="对着真实包测试">模块的测试跑在真实的 npm 包上，而不是手写替身。</ktjs-feature>
+
+</ktjs-features>
+
+<ktjs-next-steps section-title="接下来">
+
+<ktjs-step href="intro" title="简介">三个模块各覆盖什么，为什么保持分开。</ktjs-step>
+
+<ktjs-step href="guide/getting-started" title="快速开始">坐标与第一个查询。</ktjs-step>
+
+<ktjs-step href="guide/apache-arrow" title="Apache Arrow">构造表与读取结果。</ktjs-step>
+
+<ktjs-step href="guide/duckdb-wasm" title="DuckDB WASM">bundle、worker 与浏览器客户端。</ktjs-step>
+
+<ktjs-step href="guide/duckdb-node" title="DuckDB Node 客户端">原生客户端与它的 CommonJS 形状。</ktjs-step>
+
+<ktjs-step href="https://shijianjs.github.io/kmp-duckdb/api/" title="API 文档">已发布模块的 Dokka 产物。</ktjs-step>
+
+</ktjs-next-steps>

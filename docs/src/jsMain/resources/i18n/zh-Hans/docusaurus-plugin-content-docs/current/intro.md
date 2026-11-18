@@ -1,7 +1,6 @@
 ---
 id: intro
 title: kmp-duckdb
-slug: /
 sidebar_position: 1
 ---
 
@@ -33,10 +32,10 @@ DuckDB 并把查询结果当 Apache Arrow 表读取，而不必退回到手写 J
 
 ## 接下来
 
-- **[快速开始](guide/getting-started)** —— 把模块加进项目，跑第一条查询。
-- **[Apache Arrow](guide/apache-arrow)** —— 表怎么构造、读取与序列化。
-- **[DuckDB WASM](guide/duckdb-wasm)** —— 在浏览器页面里实例化数据库。
-- **[DuckDB Node](guide/duckdb-node)** —— Node 原生客户端。
+- **[快速开始](../guide/getting-started)** —— 把模块加进项目，跑第一条查询。
+- **[Apache Arrow](../guide/apache-arrow)** —— 表怎么构造、读取与序列化。
+- **[DuckDB WASM](../guide/duckdb-wasm)** —— 在浏览器页面里实例化数据库。
+- **[DuckDB Node](../guide/duckdb-node)** —— Node 原生客户端。
 - **[在线演示](https://shijianjs.github.io/kmp-duckdb/demo/)** —— 同样的代码在页面里运行。
 - **[API 参考](https://shijianjs.github.io/kmp-duckdb/api/)** —— Dokka 生成的页面。
 

@@ -1,0 +1,55 @@
+---
+title: kmp-duckdb
+description: Kotlin/JS wrappers for DuckDB and Apache Arrow
+hide_table_of_contents: true
+---
+
+import logo from '@site/static/img/kmp-duckdb-logo.png';
+
+{/* The `<ktjs-…>` sections come from the ktjs-docusaurus kit: the Gradle plugin publishes its bundle
+    under `static/ktjs-client/`, and `ClientModule.kt` loads it once the page is hydrated. `href`s stay
+    relative so the same page works under both locale prefixes; `logo` is imported so the URL carries
+    whatever `baseUrl` this site is deployed under. */}
+
+<ktjs-hero logo-src={logo} title="kmp-duckdb" tagline="Kotlin/JS wrappers for DuckDB and Apache Arrow">
+
+<ktjs-action kind="primary" href="guide/getting-started">Get started</ktjs-action>
+
+<ktjs-action kind="secondary" href="https://github.com/shijianjs/kmp-duckdb" icon="simple-icons:github">GitHub</ktjs-action>
+
+<ktjs-badge href="https://github.com/shijianjs/kmp-duckdb/blob/master/LICENSE" src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></ktjs-badge>
+
+<ktjs-badge href="https://github.com/shijianjs/kmp-duckdb" src="https://img.shields.io/badge/Kotlin%2FJS-2.4.21-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin/JS"></ktjs-badge>
+</ktjs-hero>
+
+<ktjs-features section-title="Three modules, one rule" tinted>
+
+<ktjs-feature icon="lucide:database" title="DuckDB in the browser">`ktjs-duckdb-wasm` types `@duckdb/duckdb-wasm`: the async database handle, connections, prepared statements, the file registry and the bundle selection helpers.</ktjs-feature>
+
+<ktjs-feature icon="lucide:server" title="DuckDB on the server">`ktjs-duckdb-node-neo` types `@duckdb/node-api`: real threads and real files, with the CommonJS runtime export shape handled for you.</ktjs-feature>
+
+<ktjs-feature icon="lucide:table" title="Results as Arrow">`ktjs-apache-arrow` types `apache-arrow`, the format DuckDB hands results back in — schemas, vectors, record batches and the IPC functions.</ktjs-feature>
+
+<ktjs-feature icon="lucide:shield-check" title="Types, not `JsAny`">A `Type` enum member is not a `Double`, a `'file' | 'stream'` argument is not a `String`, and a column vector is typed by its values.</ktjs-feature>
+
+<ktjs-feature icon="lucide:boxes" title="Split where upstream splits">The three packages run in different environments and evolve on different schedules, so the wrapper keeps them three modules instead of one bundle.</ktjs-feature>
+
+<ktjs-feature icon="lucide:flask-conical" title="Tested against the real packages">The modules' tests run against the actual npm packages, not hand-written fakes.</ktjs-feature>
+
+</ktjs-features>
+
+<ktjs-next-steps section-title="Where to go next">
+
+<ktjs-step href="intro" title="Introduction">What the three modules cover and why they stay separate.</ktjs-step>
+
+<ktjs-step href="guide/getting-started" title="Getting started">Coordinates and the first query.</ktjs-step>
+
+<ktjs-step href="guide/apache-arrow" title="Apache Arrow">Building tables and reading results.</ktjs-step>
+
+<ktjs-step href="guide/duckdb-wasm" title="DuckDB WASM">Bundles, workers and the browser client.</ktjs-step>
+
+<ktjs-step href="guide/duckdb-node" title="DuckDB Node client">The native client and its CommonJS shape.</ktjs-step>
+
+<ktjs-step href="https://shijianjs.github.io/kmp-duckdb/api/" title="API reference">Dokka output for the published modules.</ktjs-step>
+
+</ktjs-next-steps>

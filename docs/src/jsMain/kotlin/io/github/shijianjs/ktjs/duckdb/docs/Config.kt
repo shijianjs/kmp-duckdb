@@ -62,7 +62,11 @@ fun docusaurusConfig(): Config = unsafeJso {
     tagline = "Kotlin/JS wrappers for DuckDB and Apache Arrow"
     url = SITE_URL
     baseUrl = SITE_BASE_URL
-    favicon = "img/kmp-duckdb-logo.svg"
+    favicon = "img/kmp-duckdb-logo.png"
+    // The generated client module: it loads the kit's browser bundle after hydration and places the
+    // desktop TOC's collapse toggle. Docusaurus does not discover it on its own.
+    clientModules = arrayOf("./client-module.mjs")
+
     trailingSlash = true
     // A broken internal link fails the build instead of shipping a 404 to the Pages site.
     onBrokenLinks = io.github.shijianjs.ktjs.docusaurus.config.ReportingSeverities.`throw`
@@ -114,7 +118,7 @@ fun docusaurusConfig(): Config = unsafeJso {
             title = "kmp-duckdb"
             // The same file the favicon uses, so the navbar logo costs no extra download.
             logo = unsafeJso<NavbarLogo> {
-                src = "img/kmp-duckdb-logo.svg"
+                src = "img/kmp-duckdb-logo.png"
                 width = io.github.shijianjs.ktjs.docusaurus.config.StringOrDouble(32.0)
                 height = io.github.shijianjs.ktjs.docusaurus.config.StringOrDouble(32.0)
             }

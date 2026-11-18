@@ -1,6 +1,6 @@
 # kmp-duckdb
 
-<p align="center"><img src="docs/src/jsMain/resources/static/img/kmp-duckdb-logo.svg" width="120" alt="kmp-duckdb"></p>
+<p align="center"><img src="docs/src/jsMain/resources/static/img/kmp-duckdb-logo.png" width="120" alt="kmp-duckdb"></p>
 
 [DuckDB](https://duckdb.org/) 与 [Apache Arrow](https://arrow.apache.org/) 的 Kotlin/JS 封装：浏览器里跑的
 WASM 版本、Node 原生客户端，以及两者共用的 Arrow 包。每个封装都按上游 `.d.ts` 手写，并由真正调用上游库的

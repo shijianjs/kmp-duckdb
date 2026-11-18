@@ -1,6 +1,6 @@
 # kmp-duckdb
 
-<p align="center"><img src="docs/src/jsMain/resources/static/img/kmp-duckdb-logo.svg" width="120" alt="kmp-duckdb"></p>
+<p align="center"><img src="docs/src/jsMain/resources/static/img/kmp-duckdb-logo.png" width="120" alt="kmp-duckdb"></p>
 
 Kotlin/JS wrappers for [DuckDB](https://duckdb.org/) and [Apache Arrow](https://arrow.apache.org/):
 the WASM build that runs in a browser, the native Node client, and the Arrow package both of them

@@ -7,7 +7,7 @@ plugins {
 // dependency, hence the explicit wiring below.
 val brandAssets = tasks.register<Copy>("brandAssets") {
     from(rootProject.file("docs/src/jsMain/resources/static/img")) {
-        // Keep the same `img/` layout the site uses, so both pages reference `img/<logo>.svg`.
+        // Keep the same `img/` layout the site uses, so both pages reference `img/<logo>.png`.
         into("img")
     }
     into(layout.buildDirectory.dir("generated/brand"))
