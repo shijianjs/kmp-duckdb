@@ -31,6 +31,17 @@ Keeping them apart means a browser page pulls neither the native addon nor its t
 service does not pull a `.wasm` build it cannot instantiate. `ktjs-duckdb-wasm` and
 `ktjs-duckdb-node-neo` both depend on `ktjs-apache-arrow`, because both hand results back as Arrow
 tables — so the arrow module is the common vocabulary of the other two.
+```mermaid
+flowchart TB
+  ARROW["ktjs-apache-arrow<br/>apache-arrow 21.2.0"]
+  WASM["ktjs-duckdb-wasm<br/>@duckdb/duckdb-wasm<br/>browser / worker + .wasm"] -->|"results as Arrow tables"| ARROW
+  NODE["ktjs-duckdb-node-neo<br/>@duckdb/node-api<br/>native Node addon"] -->|"results as Arrow tables"| ARROW
+  DEMO["demo page<br/>(browser)"] --> WASM
+  SVC["Node service"] --> NODE
+```
+
+The arrow module is the shared vocabulary: both DuckDB clients hand their results back as Arrow
+tables, so the type that crosses the boundary is the same on the server and in the page.
 
 ## Where to go next
 

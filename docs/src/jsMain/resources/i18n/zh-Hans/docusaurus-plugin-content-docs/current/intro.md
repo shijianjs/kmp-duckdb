@@ -28,6 +28,16 @@ DuckDB 并把查询结果当 Apache Arrow 表读取，而不必退回到手写 J
 
 拆开之后，浏览器页面不会拉进原生插件及其类型声明，Node 服务也不会拉进它无法实例化的 `.wasm`。
 `ktjs-duckdb-wasm` 与 `ktjs-duckdb-node-neo` 都依赖 `ktjs-apache-arrow`，因为两者都把结果以 Arrow 表返回
+```mermaid
+flowchart TB
+  ARROW["ktjs-apache-arrow<br/>apache-arrow 21.2.0"]
+  WASM["ktjs-duckdb-wasm<br/>@duckdb/duckdb-wasm<br/>浏览器 / worker + .wasm"] -->|"结果以 Arrow 表返回"| ARROW
+  NODE["ktjs-duckdb-node-neo<br/>@duckdb/node-api<br/>Node 原生插件"] -->|"结果以 Arrow 表返回"| ARROW
+  DEMO["演示页（浏览器）"] --> WASM
+  SVC["Node 服务"] --> NODE
+```
+
+`ktjs-apache-arrow` 是三者共用的词汇：两个 DuckDB 客户端都把结果交回成 Arrow 表，所以跨边界的类型在服务端和页面里是同一个。
 ——arrow 模块是另外两个模块的共同词汇表。
 
 ## 接下来
