@@ -4,8 +4,8 @@ import io.github.shijianjs.ktjs.demo.page.DemoPage
 import io.github.shijianjs.ktjs.dom.webcomponent.defineIfMissing
 import web.components.CustomElementReference
 import web.dom.TagName
-import demo.arrow.TABLE_SHEET
-import demo.arrow.renderTable
+import demo.arrow.ArrowTable
+import demo.arrow.newArrowTable
 import io.github.shijianjs.ktjs.demo.i18n.Binder
 import io.github.shijianjs.ktjs.demo.i18n.Lang
 import io.github.shijianjs.ktjs.demo.i18n.Langs
@@ -22,8 +22,6 @@ import io.github.shijianjs.ktjs.duckdb.arrow.tableToIPC
 import js.buffer.ArrayBufferLike
 import js.objects.unsafeJso
 import js.typedarrays.Int32Array
-import web.html.HTMLElement
-import web.html.HtmlTagName
 
 /** The columns object [tableFromArrays] accepts. */
 private external interface IdColumn {
@@ -71,11 +69,10 @@ internal class ArrowPage : DemoPage() {
 
     private val status = Readout()
 
-    private val result: HTMLElement = HtmlTagName.div()
+    private val result: ArrowTable = newArrowTable()
 
 
     init {
-        addSheet(TABLE_SHEET)
 
         val block = sectionBlock(arrowEnglish.roundTripHeading, arrowEnglish.roundTripHint)
         texts.bind(block.title) { it.roundTripHeading }
@@ -88,7 +85,7 @@ internal class ArrowPage : DemoPage() {
         body.append(block.root)
 
         val table = roundTrip()
-        renderTable(table, result)
+        result.show(table)
         // The status text describes data, so it is set once and survives a language switch.
         status.set(
             "${table.numRows.toInt()} rows · ${table.numCols.toInt()} column · " +

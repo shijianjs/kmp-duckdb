@@ -4,8 +4,8 @@ import io.github.shijianjs.ktjs.demo.page.DemoPage
 import io.github.shijianjs.ktjs.dom.webcomponent.defineIfMissing
 import web.components.CustomElementReference
 import web.dom.TagName
-import demo.arrow.TABLE_SHEET
-import demo.arrow.renderTable
+import demo.arrow.ArrowTable
+import demo.arrow.newArrowTable
 import demo.duckdb.SAMPLE_SQL
 import demo.duckdb.bootDuckDb
 import demo.duckdb.thenDo
@@ -15,7 +15,6 @@ import io.github.shijianjs.ktjs.demo.i18n.Langs
 import io.github.shijianjs.ktjs.demo.i18n.Translations
 import io.github.shijianjs.ktjs.demo.i18n.texts
 import io.github.shijianjs.ktjs.demo.page.Readout
-import io.github.shijianjs.ktjs.demo.page.paragraph
 import io.github.shijianjs.ktjs.demo.page.sectionBlock
 import io.github.shijianjs.ktjs.dom.element.invoke
 import io.github.shijianjs.ktjs.duckdb.wasm.AsyncDuckDB
@@ -24,7 +23,6 @@ import io.github.shijianjs.ktjs.vaadin.textarea.createTextArea
 import web.dom.clickEvent
 import web.events.EventHandler
 import web.html.HTMLElement
-import web.html.HtmlTagName
 
 /** Every string this page shows, in one language. */
 private class ConsoleTexts(
@@ -96,7 +94,7 @@ internal class ConsolePage : DemoPage() {
         disabled = true
     }
 
-    private val result: HTMLElement = HtmlTagName.div()
+    private val result: ArrowTable = newArrowTable()
 
     /** The language the page currently shows; the status line is derived from it, not from a binder. */
     /** The language the console is shown in; `lang` is an attribute of `HTMLElement`. */
@@ -108,7 +106,6 @@ internal class ConsolePage : DemoPage() {
 
 
     init {
-        addSheet(TABLE_SHEET)
 
         val block = sectionBlock(consoleEnglish.consoleHeading, consoleEnglish.consoleHint)
         texts.bind(block.title) { it.consoleHeading }
@@ -160,13 +157,13 @@ internal class ConsolePage : DemoPage() {
     private fun runQuery(db: AsyncDuckDB, statement: String) {
         db.connect().thenDo({ connection ->
             connection.query(statement).thenDo({ table ->
-                renderTable(table, result)
+                result.show(table)
                 connection.close()
             }, { error ->
-                result.replaceChildren(paragraph(error.toString()))
+                result.showError(error.toString())
             })
         }, { error ->
-            result.replaceChildren(paragraph(error.toString()))
+            result.showError(error.toString())
         })
     }
 
