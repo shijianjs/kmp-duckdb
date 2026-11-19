@@ -137,14 +137,30 @@ wrapper 的目标是让上游 npm 包暴露的公开 API 在 Kotlin/JS 侧都能
 
 ## 演示页与文档
 
+- 演示页的外壳（顶栏、抽屉菜单、路由、语言与主题菜单、页面容器）来自
+  `io.github.shijianjs:ktjs-demo-kit-js`，demo 只写「这一页演示什么」。外壳组件 `DemoLayout` 由
+  `index.html` 里的 `<ktjs-demo-layout id="demo">` 命名，`main` 只负责 `define()` 与 `mount(...)`；
+  不要再自己拼 navbar、抽屉或页面容器，也不要往页面里塞外壳级别的样式。
+- 页面类实现 `Page`：`newPage()` 建内容（`setTitle` / `setSummary` / `addLink` / `addSheet`），
+  `applyTranslation(lang)` 就地改写。外壳按路由缓存页面实例，所以控制台页的数据库、输入框与上一次结果
+  在切走再切回时都还在——不要用「一处文案变化就重建整页」的写法，那会丢掉结果。
 - 演示页的所有可见文案都注册进 `Translations`（en/zh 成对），切换时**就地改写文本**，不重载页面——重载会
-  丢掉已经跑出来的查询结果。新增文案必须同时给两种语言，否则中文界面会露出英文。
+  丢掉已经跑出来的查询结果。新增文案必须同时给两种语言，否则中文界面会露出英文。组件属性（
+  `text-area` 的 `label`、按钮的 `textContent`）不经过 `Binder`，在 `applyTranslation` 里显式赋值。
+- 状态行（`Readout`）报告的是状态而不是文案：语言切换时按当前状态重算一次，不要为它绑 `Binder`。
 - 文档站每个页面都要有中英两份：英文在 `docs/.../docs/`，中文在
   `docs/.../i18n/zh-Hans/docusaurus-plugin-content-docs/current/`，路径与文件名一一对应。新增页面还要在
   `Config.kt` 的 `sidebars()` 里登记。
 - `onBrokenLinks = throw`：导航与正文里的链接必须可解析，`/demo/` 与 `/api/` 用绝对 URL（相对路径会落到
   locale 前缀下）。
 - 文档以「怎么用」为主，API 细节交给 Dokka：每页给可运行的片段，不抄整份签名清单。
+- **资源路径不要用 `document.baseURI` 拼**：外壳用 hash 路由，在 `#/console` 上它读作
+  `http://host/#/console`，拼出来的 URL 会把路径接到 fragment 后面，worker 拿到的就是本页 HTML
+  （报错形如 `Uncaught SyntaxError: Unexpected token '<'`）。按 `location.origin` + `location.pathname`
+  的目录部分解析，见 `demo/duckdb/DuckDb.kt` 的 `assetUrl`。
+- 演示页的构建要点：`compilerOptions { target = "es2015" }`（自定义元素在 ES5 产物里无法升级）、
+  `copyLumoStyles` 从 npm 工作区复制 `lumo.css` / `utility.css`、`duckdbAssets` 从
+  `@duckdb/duckdb-wasm/dist` 复制 wasm 与 worker（页面不依赖 CDN）。
 
 ## 长期任务跟踪
 

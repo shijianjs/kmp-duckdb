@@ -29,6 +29,8 @@
 
 - 本地：`:ktjs-apache-arrow:jsBrowserTest` 10 passed、`:ktjs-duckdb-node-neo:jsNodeTest` 3 passed、
   `:demo:e2eTest` 5 passed、`:docs:docusaurusBuild` 两个 locale 通过、`pagesSite` 通过。
+- demo 换成 `ktjs-demo-kit` 外壳后重跑：`:demo:jsBrowserDistribution` 通过；浏览器实测总览 / 控制台 /
+  Arrow 三页，DuckDB 真起 worker 并跑出 12 行 Arrow 结果、语言切换就地改写且结果保留、无 console 报错。
 - GitHub Actions：`ci.yml` 全绿；`pages.yml` 已发布 <https://shijianjs.github.io/kmp-duckdb/>（文档在根、
   demo 在 `/demo/`、API 在 `/api/`，中文在 `/zh-Hans/`）。
 
