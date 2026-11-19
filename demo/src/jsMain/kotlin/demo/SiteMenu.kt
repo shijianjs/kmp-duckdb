@@ -1,8 +1,8 @@
 package demo
 
-import demo.page.arrow.ArrowPage
-import demo.page.console.ConsolePage
-import demo.page.overview.OverviewPage
+import demo.page.arrow.newArrowPage
+import demo.page.console.newConsolePage
+import demo.page.overview.newOverviewPage
 import io.github.shijianjs.ktjs.demo.nav.DemoMenu
 import io.github.shijianjs.ktjs.demo.nav.Entry
 import io.github.shijianjs.ktjs.demo.nav.Group
@@ -30,8 +30,8 @@ internal val WASM: Group = Group("wasm", "lucide:database")
  */
 fun siteMenu(): DemoMenu = DemoMenu(
     listOf(
-        Entry("overview", START) { OverviewPage() },
-        Entry("console", WASM) { ConsolePage() },
-        Entry("arrow", WASM) { ArrowPage() },
+        Entry("overview", START) { newOverviewPage() },
+        Entry("console", WASM) { newConsolePage() },
+        Entry("arrow", WASM) { newArrowPage() },
     ),
 )

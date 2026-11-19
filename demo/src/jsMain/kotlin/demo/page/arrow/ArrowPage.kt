@@ -1,5 +1,9 @@
 package demo.page.arrow
 
+import io.github.shijianjs.ktjs.demo.page.DemoPage
+import io.github.shijianjs.ktjs.dom.webcomponent.defineIfMissing
+import web.components.CustomElementReference
+import web.dom.TagName
 import demo.arrow.TABLE_SHEET
 import demo.arrow.renderTable
 import io.github.shijianjs.ktjs.demo.i18n.Binder
@@ -7,10 +11,8 @@ import io.github.shijianjs.ktjs.demo.i18n.Lang
 import io.github.shijianjs.ktjs.demo.i18n.Langs
 import io.github.shijianjs.ktjs.demo.i18n.Translations
 import io.github.shijianjs.ktjs.demo.i18n.texts
-import io.github.shijianjs.ktjs.demo.nav.Page
 import io.github.shijianjs.ktjs.demo.page.Readout
 import io.github.shijianjs.ktjs.demo.page.codeText
-import io.github.shijianjs.ktjs.demo.page.newPage
 import io.github.shijianjs.ktjs.demo.page.sectionBlock
 import io.github.shijianjs.ktjs.dom.element.invoke
 import io.github.shijianjs.ktjs.duckdb.arrow.Table
@@ -63,8 +65,7 @@ private val arrowTexts: Translations<ArrowTexts> = texts(
  * The Arrow page needs no worker and no network: it builds the table, serializes it and reads it
  * back while the page is constructed, so the table is there before the route is even shown.
  */
-internal class ArrowPage : Page {
-    private val page = newPage()
+internal class ArrowPage : DemoPage() {
 
     private val texts = Binder(arrowTexts)
 
@@ -72,10 +73,9 @@ internal class ArrowPage : Page {
 
     private val result: HTMLElement = HtmlTagName.div()
 
-    override val node get() = page
 
     init {
-        page.addSheet(TABLE_SHEET)
+        addSheet(TABLE_SHEET)
 
         val block = sectionBlock(arrowEnglish.roundTripHeading, arrowEnglish.roundTripHint)
         texts.bind(block.title) { it.roundTripHeading }
@@ -85,7 +85,7 @@ internal class ArrowPage : Page {
             result,
             codeText("tableFromArrays → tableToIPC → tableFromIPC"),
         )
-        page.body.append(block.root)
+        body.append(block.root)
 
         val table = roundTrip()
         renderTable(table, result)
@@ -98,8 +98,8 @@ internal class ArrowPage : Page {
 
     override fun applyTranslation(lang: Lang) {
         val current = arrowTexts[lang]
-        page.setTitle(current.title)
-        page.setSummary(current.summary)
+        setTitle(current.title)
+        setSummary(current.summary)
         texts.apply(lang)
     }
 
@@ -114,4 +114,18 @@ internal class ArrowPage : Page {
         val built = tableFromArrays(unsafeJso<IdColumn> { id = ids })
         return tableFromIPC(tableToIPC(built))
     }
+
+    companion object : CustomElementReference<ArrowPage>(ArrowPage::class.js) {
+        val NAME: TagName<ArrowPage> = TagName("duckdb-arrow-page")
+
+        fun define() {
+            defineIfMissing(NAME, this)
+        }
+    }
+}
+
+/** Creates a defined `<duckdb-arrow-page>`. */
+internal fun newArrowPage(): ArrowPage {
+    ArrowPage.define()
+    return ArrowPage.NAME()
 }

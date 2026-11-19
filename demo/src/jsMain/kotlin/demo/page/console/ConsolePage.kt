@@ -1,5 +1,9 @@
 package demo.page.console
 
+import io.github.shijianjs.ktjs.demo.page.DemoPage
+import io.github.shijianjs.ktjs.dom.webcomponent.defineIfMissing
+import web.components.CustomElementReference
+import web.dom.TagName
 import demo.arrow.TABLE_SHEET
 import demo.arrow.renderTable
 import demo.duckdb.SAMPLE_SQL
@@ -10,9 +14,7 @@ import io.github.shijianjs.ktjs.demo.i18n.Lang
 import io.github.shijianjs.ktjs.demo.i18n.Langs
 import io.github.shijianjs.ktjs.demo.i18n.Translations
 import io.github.shijianjs.ktjs.demo.i18n.texts
-import io.github.shijianjs.ktjs.demo.nav.Page
 import io.github.shijianjs.ktjs.demo.page.Readout
-import io.github.shijianjs.ktjs.demo.page.newPage
 import io.github.shijianjs.ktjs.demo.page.paragraph
 import io.github.shijianjs.ktjs.demo.page.sectionBlock
 import io.github.shijianjs.ktjs.dom.element.invoke
@@ -77,8 +79,7 @@ private val consoleTexts: Translations<ConsoleTexts> = texts(
  * the last result all survive a trip to another route, because the layout caches the page instance
  * instead of rebuilding it.
  */
-internal class ConsolePage : Page {
-    private val page = newPage()
+internal class ConsolePage : DemoPage() {
 
     private val texts = Binder(consoleTexts)
 
@@ -98,22 +99,22 @@ internal class ConsolePage : Page {
     private val result: HTMLElement = HtmlTagName.div()
 
     /** The language the page currently shows; the status line is derived from it, not from a binder. */
-    private var lang: Lang = Langs.EN
+    /** The language the console is shown in; `lang` is an attribute of `HTMLElement`. */
+    private var shownIn: Lang = Langs.EN
 
     private var ready: Boolean = false
 
     private var failure: String? = null
 
-    override val node get() = page
 
     init {
-        page.addSheet(TABLE_SHEET)
+        addSheet(TABLE_SHEET)
 
         val block = sectionBlock(consoleEnglish.consoleHeading, consoleEnglish.consoleHint)
         texts.bind(block.title) { it.consoleHeading }
         texts.bind(block.hint) { it.consoleHint }
         block.body.append(sql, run, status.root, result)
-        page.body.append(block.root)
+        body.append(block.root)
 
         bootDuckDb(
             onReady = { db ->
@@ -132,10 +133,10 @@ internal class ConsolePage : Page {
     }
 
     override fun applyTranslation(lang: Lang) {
-        this.lang = lang
-        val current = consoleTexts[lang]
-        page.setTitle(current.title)
-        page.setSummary(current.summary)
+        shownIn = lang
+        val current = consoleTexts[shownIn]
+        setTitle(current.title)
+        setSummary(current.summary)
         texts.apply(lang)
         // The label and the button text are properties of components, not text of a node, so they are
         // assigned here instead of going through the binder.
@@ -146,7 +147,7 @@ internal class ConsolePage : Page {
 
     /** The status line reports state — loading, ready or failed — so it is rebuilt from that state. */
     private fun refreshStatus() {
-        val current = consoleTexts[lang]
+        val current = consoleTexts[shownIn]
         status.set(
             when {
                 failure != null -> current.failed + failure
@@ -168,4 +169,19 @@ internal class ConsolePage : Page {
             result.replaceChildren(paragraph(error.toString()))
         })
     }
+
+    companion object : CustomElementReference<ConsolePage>(ConsolePage::class.js) {
+        val NAME: TagName<ConsolePage> = TagName("duckdb-console-page")
+
+        fun define() {
+            defineIfMissing(NAME, this)
+        }
+    }
 }
+
+/** Creates a defined `<duckdb-console-page>`. */
+internal fun newConsolePage(): ConsolePage {
+    ConsolePage.define()
+    return ConsolePage.NAME()
+}
+
