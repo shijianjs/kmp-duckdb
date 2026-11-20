@@ -14,7 +14,7 @@ import io.github.shijianjs.ktjs.demo.i18n.Lang
 import io.github.shijianjs.ktjs.demo.i18n.Langs
 import io.github.shijianjs.ktjs.demo.i18n.Translations
 import io.github.shijianjs.ktjs.demo.i18n.texts
-import io.github.shijianjs.ktjs.demo.page.Readout
+import io.github.shijianjs.ktjs.demo.page.newReadout
 import io.github.shijianjs.ktjs.demo.page.sectionBlock
 import io.github.shijianjs.ktjs.dom.element.invoke
 import io.github.shijianjs.ktjs.duckdb.wasm.AsyncDuckDB
@@ -81,7 +81,7 @@ internal class ConsolePage : DemoPage() {
 
     private val texts = Binder(consoleTexts)
 
-    private val status = Readout(consoleEnglish.loading)
+    private val status = newReadout(consoleEnglish.loading)
 
     private val sql = createTextArea {
         label = consoleEnglish.sqlLabel

@@ -11,7 +11,7 @@ import io.github.shijianjs.ktjs.demo.i18n.Lang
 import io.github.shijianjs.ktjs.demo.i18n.Langs
 import io.github.shijianjs.ktjs.demo.i18n.Translations
 import io.github.shijianjs.ktjs.demo.i18n.texts
-import io.github.shijianjs.ktjs.demo.page.Readout
+import io.github.shijianjs.ktjs.demo.page.newReadout
 import io.github.shijianjs.ktjs.demo.page.codeText
 import io.github.shijianjs.ktjs.demo.page.sectionBlock
 import io.github.shijianjs.ktjs.dom.element.invoke
@@ -67,7 +67,7 @@ internal class ArrowPage : DemoPage() {
 
     private val texts = Binder(arrowTexts)
 
-    private val status = Readout()
+    private val status = newReadout()
 
     private val result: ArrowTable = newArrowTable()
 
