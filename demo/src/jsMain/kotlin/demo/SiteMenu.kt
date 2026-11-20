@@ -1,11 +1,12 @@
 package demo
 
-import demo.page.arrow.newArrowPage
-import demo.page.console.newConsolePage
-import demo.page.overview.newOverviewPage
+import demo.page.arrow.ArrowPage
+import demo.page.console.ConsolePage
+import demo.page.overview.OverviewPage
 import io.github.shijianjs.ktjs.demo.nav.DemoMenu
 import io.github.shijianjs.ktjs.demo.nav.Entry
 import io.github.shijianjs.ktjs.demo.nav.Group
+import io.github.shijianjs.ktjs.dom.element.invoke
 
 /** The upstream packages this demo runs against; the navbar shows it under the site name. */
 const val SITE_VERSION: String = "duckdb-wasm 1.x + arrow 21"
@@ -30,8 +31,8 @@ internal val WASM: Group = Group("wasm", "lucide:database")
  */
 fun siteMenu(): DemoMenu = DemoMenu(
     listOf(
-        Entry("overview", START) { newOverviewPage() },
-        Entry("console", WASM) { newConsolePage() },
-        Entry("arrow", WASM) { newArrowPage() },
+        Entry("overview", START) { OverviewPage.NAME() },
+        Entry("console", WASM) { ConsolePage.NAME() },
+        Entry("arrow", WASM) { ArrowPage.NAME() },
     ),
 )

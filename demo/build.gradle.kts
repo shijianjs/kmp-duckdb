@@ -73,7 +73,7 @@ kotlin {
         }
 
         jsMain.dependencies {
-            implementation("org.jetbrains.kotlin-wrappers:kotlin-browser:2026.11.1")
+            implementation("org.jetbrains.kotlin-wrappers:kotlin-browser:2026.11.2")
             // The published modules the demo demonstrates, one line each.
             implementation(project(":ktjs-duckdb-wasm"))
             // The shared demo shell: layout, menu, router, i18n. Published to `mavenLocal` by a

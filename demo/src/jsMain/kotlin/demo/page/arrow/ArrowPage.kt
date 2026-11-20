@@ -1,20 +1,17 @@
 package demo.page.arrow
 
 import io.github.shijianjs.ktjs.demo.page.DemoPage
-import io.github.shijianjs.ktjs.dom.webcomponent.defineIfMissing
-import web.components.CustomElementReference
-import web.dom.TagName
 import demo.arrow.ArrowTable
-import demo.arrow.newArrowTable
 import io.github.shijianjs.ktjs.demo.i18n.Binder
 import io.github.shijianjs.ktjs.demo.i18n.Lang
 import io.github.shijianjs.ktjs.demo.i18n.Langs
 import io.github.shijianjs.ktjs.demo.i18n.Translations
 import io.github.shijianjs.ktjs.demo.i18n.texts
-import io.github.shijianjs.ktjs.demo.page.newReadout
-import io.github.shijianjs.ktjs.demo.page.codeText
-import io.github.shijianjs.ktjs.demo.page.sectionBlock
+import io.github.shijianjs.ktjs.demo.page.Blocks.codeText
+import io.github.shijianjs.ktjs.demo.page.SectionBlock
+import io.github.shijianjs.ktjs.demo.page.Readout
 import io.github.shijianjs.ktjs.dom.element.invoke
+import io.github.shijianjs.ktjs.dom.webcomponent.CustomElementReferenceAdapter
 import io.github.shijianjs.ktjs.duckdb.arrow.Table
 import io.github.shijianjs.ktjs.duckdb.arrow.tableFromArrays
 import io.github.shijianjs.ktjs.duckdb.arrow.tableFromIPC
@@ -67,14 +64,14 @@ internal class ArrowPage : DemoPage() {
 
     private val texts = Binder(arrowTexts)
 
-    private val status = newReadout()
+    private val status = Readout.NAME { show() }
 
-    private val result: ArrowTable = newArrowTable()
+    private val result: ArrowTable = ArrowTable.NAME()
 
 
     init {
 
-        val block = sectionBlock(arrowEnglish.roundTripHeading, arrowEnglish.roundTripHint)
+        val block = SectionBlock.NAME { show(arrowEnglish.roundTripHeading, arrowEnglish.roundTripHint) }
         texts.bind(block.heading) { it.roundTripHeading }
         texts.bind(block.hint) { it.roundTripHint }
         block.body.append(
@@ -112,17 +109,5 @@ internal class ArrowPage : DemoPage() {
         return tableFromIPC(tableToIPC(built))
     }
 
-    companion object : CustomElementReference<ArrowPage>(ArrowPage::class.js) {
-        val NAME: TagName<ArrowPage> = TagName("duckdb-arrow-page")
-
-        fun define() {
-            defineIfMissing(NAME, this)
-        }
-    }
-}
-
-/** Creates a defined `<duckdb-arrow-page>`. */
-internal fun newArrowPage(): ArrowPage {
-    ArrowPage.define()
-    return ArrowPage.NAME()
+    companion object : CustomElementReferenceAdapter<ArrowPage>(ArrowPage::class.js, "duckdb-arrow-page")
 }

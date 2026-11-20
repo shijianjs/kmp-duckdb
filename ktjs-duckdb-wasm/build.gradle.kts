@@ -51,7 +51,7 @@ kotlin {
 
             // `AsyncDuckDB` takes a `Worker` in its constructor and hands one back: kotlin-browser's
             // `web.workers.Worker` is the type callers use.
-            api("org.jetbrains.kotlin-wrappers:kotlin-browser:2026.11.1")
+            api("org.jetbrains.kotlin-wrappers:kotlin-browser:2026.11.2")
         }
         jsTest.dependencies {
             implementation(kotlin("test"))

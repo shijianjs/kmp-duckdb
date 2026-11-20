@@ -1,11 +1,9 @@
 package demo.page.console
 
 import io.github.shijianjs.ktjs.demo.page.DemoPage
-import io.github.shijianjs.ktjs.dom.webcomponent.defineIfMissing
-import web.components.CustomElementReference
-import web.dom.TagName
+import io.github.shijianjs.ktjs.demo.page.SectionBlock
+import io.github.shijianjs.ktjs.demo.page.Readout
 import demo.arrow.ArrowTable
-import demo.arrow.newArrowTable
 import demo.duckdb.SAMPLE_SQL
 import demo.duckdb.bootDuckDb
 import demo.duckdb.thenDo
@@ -14,9 +12,8 @@ import io.github.shijianjs.ktjs.demo.i18n.Lang
 import io.github.shijianjs.ktjs.demo.i18n.Langs
 import io.github.shijianjs.ktjs.demo.i18n.Translations
 import io.github.shijianjs.ktjs.demo.i18n.texts
-import io.github.shijianjs.ktjs.demo.page.newReadout
-import io.github.shijianjs.ktjs.demo.page.sectionBlock
 import io.github.shijianjs.ktjs.dom.element.invoke
+import io.github.shijianjs.ktjs.dom.webcomponent.CustomElementReferenceAdapter
 import io.github.shijianjs.ktjs.duckdb.wasm.AsyncDuckDB
 import io.github.shijianjs.ktjs.vaadin.button.createButton
 import io.github.shijianjs.ktjs.vaadin.textarea.createTextArea
@@ -81,7 +78,7 @@ internal class ConsolePage : DemoPage() {
 
     private val texts = Binder(consoleTexts)
 
-    private val status = newReadout(consoleEnglish.loading)
+    private val status = Readout.NAME { show(consoleEnglish.loading) }
 
     private val sql = createTextArea {
         label = consoleEnglish.sqlLabel
@@ -94,7 +91,7 @@ internal class ConsolePage : DemoPage() {
         disabled = true
     }
 
-    private val result: ArrowTable = newArrowTable()
+    private val result: ArrowTable = ArrowTable.NAME()
 
     /** The language the page currently shows; the status line is derived from it, not from a binder. */
     /** The language the console is shown in; `lang` is an attribute of `HTMLElement`. */
@@ -107,7 +104,7 @@ internal class ConsolePage : DemoPage() {
 
     init {
 
-        val block = sectionBlock(consoleEnglish.consoleHeading, consoleEnglish.consoleHint)
+        val block = SectionBlock.NAME { show(consoleEnglish.consoleHeading, consoleEnglish.consoleHint) }
         texts.bind(block.heading) { it.consoleHeading }
         texts.bind(block.hint) { it.consoleHint }
         block.body.append(sql, run, status.root, result)
@@ -167,18 +164,6 @@ internal class ConsolePage : DemoPage() {
         })
     }
 
-    companion object : CustomElementReference<ConsolePage>(ConsolePage::class.js) {
-        val NAME: TagName<ConsolePage> = TagName("duckdb-console-page")
-
-        fun define() {
-            defineIfMissing(NAME, this)
-        }
-    }
-}
-
-/** Creates a defined `<duckdb-console-page>`. */
-internal fun newConsolePage(): ConsolePage {
-    ConsolePage.define()
-    return ConsolePage.NAME()
+    companion object : CustomElementReferenceAdapter<ConsolePage>(ConsolePage::class.js, "duckdb-console-page")
 }
 

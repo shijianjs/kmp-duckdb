@@ -5,9 +5,8 @@ import io.github.shijianjs.ktjs.dom.css.cssSheet
 import io.github.shijianjs.ktjs.dom.element.invoke
 import io.github.shijianjs.ktjs.dom.webcomponent.CustomElementAdapter
 import io.github.shijianjs.ktjs.dom.webcomponent.attachStyledShadow
-import io.github.shijianjs.ktjs.dom.webcomponent.defineIfMissing
+import io.github.shijianjs.ktjs.dom.webcomponent.CustomElementReferenceAdapter
 import io.github.shijianjs.ktjs.duckdb.arrow.Table
-import web.components.CustomElementReference
 import web.cssom.BorderCollapse
 import web.cssom.CSSStyleSheet
 import web.cssom.ClassName
@@ -16,7 +15,6 @@ import web.cssom.Padding
 import web.cssom.TextAlign
 import web.cssom.pct
 import web.cssom.px
-import web.dom.TagName
 import web.html.HTMLTableElement
 import web.html.HtmlTagName
 import kotlin.js.JsAny
@@ -109,19 +107,7 @@ internal class ArrowTable : CustomElementAdapter() {
         surface.replaceChildren(HtmlTagName.p { textContent = message })
     }
 
-    companion object : CustomElementReference<ArrowTable>(ArrowTable::class.js) {
-        val NAME: TagName<ArrowTable> = TagName("duckdb-arrow-table")
-
-        fun define() {
-            defineIfMissing(NAME, this)
-        }
-    }
-}
-
-/** Creates a defined `<duckdb-arrow-table>`. */
-internal fun newArrowTable(): ArrowTable {
-    ArrowTable.define()
-    return ArrowTable.NAME()
+    companion object : CustomElementReferenceAdapter<ArrowTable>(ArrowTable::class.js, "duckdb-arrow-table")
 }
 
 private fun formatValue(value: JsAny?): String = when {
