@@ -20,39 +20,6 @@ import io.github.shijianjs.ktjs.vaadin.textarea.createTextArea
 import web.events.EventHandler
 import web.html.HTMLElement
 
-private val consoleEnglish: ConsoleTexts = ConsoleTexts(
-    title = "SQL console",
-    summary = "The database runs in a web worker next to this page; results come back as Apache Arrow " +
-        "tables, which the wrapper reads column by column.",
-    consoleHeading = "DuckDB WASM",
-    consoleHint = "The sample file people.csv is registered with registerFileText at boot, so the query " +
-        "can join it straight away. Both the module and the worker script are served from duckdb/, next " +
-        "to this page — nothing is fetched from a CDN.",
-    sqlLabel = "SQL",
-    runLabel = "Run",
-    loading = "Loading the WASM module …",
-    ready = "DuckDB is ready. Run the query to see an Arrow table.",
-    failed = "DuckDB failed to start: ",
-)
-
-private val consoleChinese: ConsoleTexts = ConsoleTexts(
-    title = "SQL 控制台",
-    summary = "数据库运行在同页面的 web worker 里，结果以 Apache Arrow 表返回，再由封装逐列读出来。",
-    consoleHeading = "DuckDB WASM",
-    consoleHint = "示例文件 people.csv 在启动时由 registerFileText 注册，所以查询可以直接 join 它。" +
-        "模块与 worker 脚本都从本页旁边的 duckdb/ 目录取，不依赖任何 CDN。",
-    sqlLabel = "SQL",
-    runLabel = "执行",
-    loading = "正在加载 WASM 模块 …",
-    ready = "DuckDB 已就绪，点击执行即可看到 Arrow 表。",
-    failed = "DuckDB 启动失败：",
-)
-
-private val consoleTexts: Translations<ConsoleTexts> = texts(
-    Langs.EN to consoleEnglish,
-    Langs.ZH_HANS to consoleChinese,
-)
-
 /**
  * The live console: a text area, a run button and an Arrow table.
  *
@@ -149,5 +116,37 @@ internal class ConsolePage : DemoPage() {
         })
     }
 
-    companion object : CustomElementReferenceAdapter<ConsolePage>(ConsolePage::class.js, "duckdb-console-page")
+    companion object : CustomElementReferenceAdapter<ConsolePage>(ConsolePage::class.js, "duckdb-console-page") {
+
+        private val consoleEnglish: ConsoleTexts = ConsoleTexts(
+            title = "SQL console",
+            summary = "The database runs in a web worker next to this page; results come back as Apache Arrow " +
+                "tables, which the wrapper reads column by column.",
+            consoleHeading = "DuckDB WASM",
+            consoleHint = "The sample file people.csv is registered with registerFileText at boot, so the query " +
+                "can join it straight away. Both the module and the worker script are served from duckdb/, next " +
+                "to this page — nothing is fetched from a CDN.",
+            sqlLabel = "SQL",
+            runLabel = "Run",
+            loading = "Loading the WASM module …",
+            ready = "DuckDB is ready. Run the query to see an Arrow table.",
+            failed = "DuckDB failed to start: ",
+        )
+        private val consoleChinese: ConsoleTexts = ConsoleTexts(
+            title = "SQL 控制台",
+            summary = "数据库运行在同页面的 web worker 里，结果以 Apache Arrow 表返回，再由封装逐列读出来。",
+            consoleHeading = "DuckDB WASM",
+            consoleHint = "示例文件 people.csv 在启动时由 registerFileText 注册，所以查询可以直接 join 它。" +
+                "模块与 worker 脚本都从本页旁边的 duckdb/ 目录取，不依赖任何 CDN。",
+            sqlLabel = "SQL",
+            runLabel = "执行",
+            loading = "正在加载 WASM 模块 …",
+            ready = "DuckDB 已就绪，点击执行即可看到 Arrow 表。",
+            failed = "DuckDB 启动失败：",
+        )
+        private val consoleTexts: Translations<ConsoleTexts> = texts(
+            Langs.EN to consoleEnglish,
+            Langs.ZH_HANS to consoleChinese,
+        )
+    }
 }

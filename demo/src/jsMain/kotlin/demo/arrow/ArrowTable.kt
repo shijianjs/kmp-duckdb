@@ -25,33 +25,6 @@ import kotlin.js.JsAny
  * A `<table>` has no component that fits an arbitrary schema, so it is the one shape these pages build
  * themselves; the rules stay in this file, and the element adopts them into its own shadow tree.
  */
-private val TABLE: ClassName = ClassName("arrow-table")
-
-private val TABLE_HEAD: ClassName = ClassName("arrow-table__head")
-
-private val TABLE_CELL: ClassName = ClassName("arrow-table__cell")
-
-private val TABLE_SHEET: CSSStyleSheet = cssSheet {
-    TABLE {
-        width = 100.pct
-        borderCollapse = BorderCollapse.collapse
-        fontSize = 13.px
-    }
-    TABLE_HEAD {
-        padding = Padding(4.px, 8.px)
-        textAlign = TextAlign.left
-        borderBottomWidth = 1.px
-        borderBottomStyle = LineStyle.solid
-        borderBottomColor = Palette.border
-    }
-    TABLE_CELL {
-        padding = Padding(4.px, 8.px)
-        textAlign = TextAlign.left
-        borderBottomWidth = 1.px
-        borderBottomStyle = LineStyle.solid
-        borderBottomColor = Palette.border
-    }
-}
 
 /**
  * `<duckdb-arrow-table>`: the result area of the two query pages.
@@ -107,10 +80,35 @@ internal class ArrowTable : CustomElementAdapter() {
         surface.replaceChildren(HtmlTagName.p { textContent = message })
     }
 
-    companion object : CustomElementReferenceAdapter<ArrowTable>(ArrowTable::class.js, "duckdb-arrow-table")
-}
+    companion object : CustomElementReferenceAdapter<ArrowTable>(ArrowTable::class.js, "duckdb-arrow-table") {
 
-private fun formatValue(value: JsAny?): String = when {
-    value == null -> "NULL"
-    else -> value.toString()
+        private val TABLE: ClassName = ClassName("arrow-table")
+        private val TABLE_HEAD: ClassName = ClassName("arrow-table__head")
+        private val TABLE_CELL: ClassName = ClassName("arrow-table__cell")
+        private val TABLE_SHEET: CSSStyleSheet = cssSheet {
+            TABLE {
+                width = 100.pct
+                borderCollapse = BorderCollapse.collapse
+                fontSize = 13.px
+            }
+            TABLE_HEAD {
+                padding = Padding(4.px, 8.px)
+                textAlign = TextAlign.left
+                borderBottomWidth = 1.px
+                borderBottomStyle = LineStyle.solid
+                borderBottomColor = Palette.border
+            }
+            TABLE_CELL {
+                padding = Padding(4.px, 8.px)
+                textAlign = TextAlign.left
+                borderBottomWidth = 1.px
+                borderBottomStyle = LineStyle.solid
+                borderBottomColor = Palette.border
+            }
+        }
+        private fun formatValue(value: JsAny?): String = when {
+            value == null -> "NULL"
+            else -> value.toString()
+        }
+    }
 }

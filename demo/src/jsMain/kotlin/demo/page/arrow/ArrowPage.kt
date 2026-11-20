@@ -25,29 +25,6 @@ private external interface IdColumn {
     var id: Int32Array<ArrayBufferLike>
 }
 
-private val arrowEnglish: ArrowTexts = ArrowTexts(
-    title = "Arrow round trip",
-    summary = "A table built in Kotlin, serialized to Arrow IPC and parsed back — all three steps through " +
-        "the wrapper.",
-    roundTripHeading = "Build, serialize, read back",
-    roundTripHint = "tableFromArrays builds the table from a typed array, tableToIPC serializes it and " +
-        "tableFromIPC reads it again. The status line reports what came back, including the field name " +
-        "that survived the trip.",
-)
-
-private val arrowChinese: ArrowTexts = ArrowTexts(
-    title = "Arrow 表往返",
-    summary = "在 Kotlin 里构造一张表、序列化成 Arrow IPC，再解析回来 —— 三步都走封装。",
-    roundTripHeading = "构造、序列化、读回",
-    roundTripHint = "tableFromArrays 用 typed array 构造表，tableToIPC 序列化，tableFromIPC 再读回。" +
-        "状态行报告读回来的是什么，包括往返之后仍然保留的字段名。",
-)
-
-private val arrowTexts: Translations<ArrowTexts> = texts(
-    Langs.EN to arrowEnglish,
-    Langs.ZH_HANS to arrowChinese,
-)
-
 /**
  * The Arrow page needs no worker and no network: it builds the table, serializes it and reads it
  * back while the page is constructed, so the table is there before the route is even shown.
@@ -100,5 +77,27 @@ internal class ArrowPage : DemoPage() {
         return tableFromIPC(tableToIPC(built))
     }
 
-    companion object : CustomElementReferenceAdapter<ArrowPage>(ArrowPage::class.js, "duckdb-arrow-page")
+    companion object : CustomElementReferenceAdapter<ArrowPage>(ArrowPage::class.js, "duckdb-arrow-page") {
+
+        private val arrowEnglish: ArrowTexts = ArrowTexts(
+            title = "Arrow round trip",
+            summary = "A table built in Kotlin, serialized to Arrow IPC and parsed back — all three steps through " +
+                "the wrapper.",
+            roundTripHeading = "Build, serialize, read back",
+            roundTripHint = "tableFromArrays builds the table from a typed array, tableToIPC serializes it and " +
+                "tableFromIPC reads it again. The status line reports what came back, including the field name " +
+                "that survived the trip.",
+        )
+        private val arrowChinese: ArrowTexts = ArrowTexts(
+            title = "Arrow 表往返",
+            summary = "在 Kotlin 里构造一张表、序列化成 Arrow IPC，再解析回来 —— 三步都走封装。",
+            roundTripHeading = "构造、序列化、读回",
+            roundTripHint = "tableFromArrays 用 typed array 构造表，tableToIPC 序列化，tableFromIPC 再读回。" +
+                "状态行报告读回来的是什么，包括往返之后仍然保留的字段名。",
+        )
+        private val arrowTexts: Translations<ArrowTexts> = texts(
+            Langs.EN to arrowEnglish,
+            Langs.ZH_HANS to arrowChinese,
+        )
+    }
 }
