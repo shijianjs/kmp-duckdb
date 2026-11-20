@@ -75,7 +75,7 @@ internal class ArrowPage : DemoPage() {
     init {
 
         val block = sectionBlock(arrowEnglish.roundTripHeading, arrowEnglish.roundTripHint)
-        texts.bind(block.title) { it.roundTripHeading }
+        texts.bind(block.heading) { it.roundTripHeading }
         texts.bind(block.hint) { it.roundTripHint }
         block.body.append(
             status.root,

@@ -108,7 +108,7 @@ internal class ConsolePage : DemoPage() {
     init {
 
         val block = sectionBlock(consoleEnglish.consoleHeading, consoleEnglish.consoleHint)
-        texts.bind(block.title) { it.consoleHeading }
+        texts.bind(block.heading) { it.consoleHeading }
         texts.bind(block.hint) { it.consoleHint }
         block.body.append(sql, run, status.root, result)
         body.append(block.root)
