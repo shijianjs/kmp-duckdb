@@ -17,22 +17,8 @@ import io.github.shijianjs.ktjs.dom.webcomponent.CustomElementReferenceAdapter
 import io.github.shijianjs.ktjs.duckdb.wasm.AsyncDuckDB
 import io.github.shijianjs.ktjs.vaadin.button.createButton
 import io.github.shijianjs.ktjs.vaadin.textarea.createTextArea
-import web.dom.clickEvent
 import web.events.EventHandler
 import web.html.HTMLElement
-
-/** Every string this page shows, in one language. */
-private class ConsoleTexts(
-    val title: String,
-    val summary: String,
-    val consoleHeading: String,
-    val consoleHint: String,
-    val sqlLabel: String,
-    val runLabel: String,
-    val loading: String,
-    val ready: String,
-    val failed: String,
-)
 
 private val consoleEnglish: ConsoleTexts = ConsoleTexts(
     title = "SQL console",
@@ -101,7 +87,6 @@ internal class ConsolePage : DemoPage() {
 
     private var failure: String? = null
 
-
     init {
 
         val block = SectionBlock.NAME { show(consoleEnglish.consoleHeading, consoleEnglish.consoleHint) }
@@ -166,4 +151,3 @@ internal class ConsolePage : DemoPage() {
 
     companion object : CustomElementReferenceAdapter<ConsolePage>(ConsolePage::class.js, "duckdb-console-page")
 }
-

@@ -25,14 +25,6 @@ private external interface IdColumn {
     var id: Int32Array<ArrayBufferLike>
 }
 
-/** Every string this page shows, in one language. */
-private class ArrowTexts(
-    val title: String,
-    val summary: String,
-    val roundTripHeading: String,
-    val roundTripHint: String,
-)
-
 private val arrowEnglish: ArrowTexts = ArrowTexts(
     title = "Arrow round trip",
     summary = "A table built in Kotlin, serialized to Arrow IPC and parsed back — all three steps through " +
@@ -67,7 +59,6 @@ internal class ArrowPage : DemoPage() {
     private val status = Readout.NAME { show() }
 
     private val result: ArrowTable = ArrowTable.NAME()
-
 
     init {
 

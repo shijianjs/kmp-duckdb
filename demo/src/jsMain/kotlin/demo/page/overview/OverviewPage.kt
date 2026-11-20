@@ -17,20 +17,6 @@ import io.github.shijianjs.ktjs.dom.element.unaryPlus
 import io.github.shijianjs.ktjs.dom.webcomponent.CustomElementReferenceAdapter
 import web.html.HtmlTagName
 
-/** Every string this page shows, in one language. */
-private class OverviewTexts(
-    val title: String,
-    val summary: String,
-    val docsLink: String,
-    val sourceLink: String,
-    val apiLink: String,
-    val purposeHeading: String,
-    val body: String,
-    val bullets: List<String>,
-    val pagesHeading: String,
-    val pagesBody: String,
-)
-
 private val overviewEnglish: OverviewTexts = OverviewTexts(
     title = "Overview",
     summary = "Kotlin/JS wrappers for DuckDB WASM, the DuckDB Node client and Apache Arrow.",
@@ -82,7 +68,6 @@ private val overviewTexts: Translations<OverviewTexts> = texts(
 internal class OverviewPage : DemoPage() {
 
     private val texts = Binder(overviewTexts)
-
 
     init {
         addLink(texts.bind(anchor("", DOCS_URL, external = true), { it.docsLink }))
