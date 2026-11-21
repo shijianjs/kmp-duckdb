@@ -25,7 +25,7 @@ class DemoPageTest {
 
         // The logo is copied in from the site's static files by the `brandAssets` task.
         assertTrue(page.locator("#demo img.layout__logo").isVisible(), "the shell serves the project logo")
-        assertEquals("Overview", page.locator("#demo ktjs-demo-page h1").first().textContent())
+        assertEquals("Overview", page.locator("#demo duckdb-overview-page h1").first().textContent())
 
         // The drawer lists the three routes; the item carries the route id the router reads.
         assertEquals(3, page.locator("#demo vaadin-side-nav-item[data-route]").count())
@@ -38,10 +38,10 @@ class DemoPageTest {
 
         // The status line turns into the ready message once the worker, the wasm module and the
         // registered CSV are all in place.
-        page.waitForSelector("#demo ktjs-demo-page .readout:has-text(\"DuckDB is ready\")")
+        page.waitForSelector("#demo duckdb-console-page .readout:has-text(\"DuckDB is ready\")")
 
-        val grid = page.locator("#demo ktjs-demo-page table.arrow-table")
-        page.waitForSelector("#demo ktjs-demo-page table.arrow-table")
+        val grid = page.locator("#demo duckdb-console-page table.arrow-table")
+        page.waitForSelector("#demo duckdb-console-page table.arrow-table")
         assertEquals(5, grid.locator("thead th").count(), "name, city, age, n, squared")
         assertEquals(12, grid.locator("tbody tr").count(), "3 people × 4 generated rows")
         assertTrue(
@@ -59,15 +59,15 @@ class DemoPageTest {
         openPage(page)
         openConsole(page)
 
-        page.waitForSelector("#demo ktjs-demo-page .readout:has-text(\"DuckDB is ready\")")
-        page.waitForSelector("#demo ktjs-demo-page table.arrow-table")
+        page.waitForSelector("#demo duckdb-console-page .readout:has-text(\"DuckDB is ready\")")
+        page.waitForSelector("#demo duckdb-console-page table.arrow-table")
 
         switchLanguage(page, "zh-Hans")
-        assertEquals("SQL 控制台", page.locator("#demo ktjs-demo-page h1").first().textContent())
+        assertEquals("SQL 控制台", page.locator("#demo duckdb-console-page h1").first().textContent())
 
         // The result is data: switching the language must not re-run the query or clear the table.
-        assertTrue(page.locator("#demo ktjs-demo-page table.arrow-table").isVisible())
-        assertEquals(12, page.locator("#demo ktjs-demo-page table.arrow-table tbody tr").count())
+        assertTrue(page.locator("#demo duckdb-console-page table.arrow-table").isVisible())
+        assertEquals(12, page.locator("#demo duckdb-console-page table.arrow-table tbody tr").count())
     }
 
     @RetryingTest(maxAttempts = 2)
@@ -75,14 +75,14 @@ class DemoPageTest {
         openPage(page)
         page.locator("#demo vaadin-side-nav-item[data-route='arrow']").first().click()
 
-        page.waitForSelector("#demo ktjs-demo-page .readout")
-        val status = page.locator("#demo ktjs-demo-page .readout").first()
+        page.waitForSelector("#demo duckdb-arrow-page .readout")
+        val status = page.locator("#demo duckdb-arrow-page .readout").first()
         val text = status.textContent()!!
         assertTrue(text.contains("4 rows"), "status: $text")
         assertTrue(text.contains("1 column"), "status: $text")
         assertTrue(text.contains("schema preserved: id"), "status: $text")
 
-        val grid = page.locator("#demo ktjs-demo-page table.arrow-table")
+        val grid = page.locator("#demo duckdb-arrow-page table.arrow-table")
         assertEquals(1, grid.locator("thead th").count())
         assertEquals(4, grid.locator("tbody tr").count())
         assertEquals("10", grid.locator("tbody tr").first().locator("td").first().textContent())
@@ -102,7 +102,7 @@ class DemoPageTest {
         openPage(page)
         openConsole(page)
         // Let the worker boot, fetch the wasm module and run the sample query before judging.
-        page.waitForSelector("#demo ktjs-demo-page table.arrow-table")
+        page.waitForSelector("#demo duckdb-console-page table.arrow-table")
 
         assertTrue(consoleErrors.isEmpty(), "console errors: $consoleErrors")
         assertTrue(failedRequests.isEmpty(), "failed requests: $failedRequests")
