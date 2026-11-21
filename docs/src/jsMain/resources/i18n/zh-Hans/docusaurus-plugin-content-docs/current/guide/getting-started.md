@@ -31,6 +31,15 @@ kotlin {
 `@duckdb/duckdb-wasm`、`@duckdb/node-api` 由 klib 元数据带入，公司内网镜像按常规方式配置
 （`npm_config_registry` 或 `.npmrc`）。
 
+```mermaid
+flowchart LR
+    ARROW["ktjs-apache-arrow<br/>读取结果的公共词汇"] --> WASM["ktjs-duckdb-wasm<br/>浏览器"]
+    ARROW --> NODE["ktjs-duckdb-node-neo<br/>Node 原生客户端"]
+    ASSET["dist 里的 wasm + worker 拷进 duckdb/"] --> WASM
+    WASM --> Q1["query() 返回 Arrow Table"]
+    NODE --> Q2["runAndReadAll() 返回原生 JS 值"]
+```
+
 ## 浏览器里跑第一条查询
 
 每个方法都返回 JS `Promise`，所以下面这条链就是完整流程：实例化模块、打开数据库、建立连接、执行查询，

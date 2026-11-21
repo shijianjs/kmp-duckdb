@@ -3,6 +3,16 @@
 `ktjs-apache-arrow` 声明了 `apache-arrow@21.2.0` 的公开接口。Arrow 是 DuckDB 返回结果的数据格式，
 所以读取结果的每条路径都要经过这个模块。
 
+```mermaid
+flowchart LR
+    ARR["类型化数组或普通 JS 数组"] --> TFA["tableFromArrays：调用方声明列接口"]
+    TFA --> TBL["Arrow Table"]
+    TBL --> READ["schema.fields / getChildAt(i) / get(row)"]
+    TBL --> IPC["tableToIPC(table) → 字节流或 file 容器"]
+    IPC --> BACK["tableFromIPC：字节、JSON，或异步形态"]
+    ENUM["Types.Int32 / TimeUnits.MILLISECOND<br/>值类型 + 常量对象，不是裸数字"] --> TBL
+```
+
 ## 构造表
 
 ```kotlin

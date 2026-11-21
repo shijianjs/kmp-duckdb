@@ -23,6 +23,16 @@ DuckDBNodeApi.DuckDBInstance.create(":memory:")
 `create` takes a file path — `":memory:"` for an in-memory database. (Passing a Kotlin `null` for
 "no path" is not the same thing: upstream validates the argument as a string.)
 
+```mermaid
+flowchart LR
+    CJS["@duckdb/node-api: CommonJS, exports built at runtime"] --> DEF["import the default export and type it"]
+    DEF --> API["DuckDBNodeApi.DuckDBInstance.create(path)"]
+    API --> CONN["instance.connect()"]
+    CONN --> RUN["run / runAndRead / runAndReadAll / runAndReadUntil"]
+    RUN --> ROWS["getRows / getRowObjects / getRowsJson<br/>native JS values, BIGINT comes back as bigint"]
+    CONN --> PREP["prepare → bind(positional or named) → run"]
+```
+
 ## Connect and run
 
 ```kotlin

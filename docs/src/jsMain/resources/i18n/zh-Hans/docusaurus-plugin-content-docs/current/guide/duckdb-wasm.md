@@ -18,6 +18,18 @@ val bundle = selectBundle(bundles, getPlatformFeatures())
 一个 bundle 暴露 `mainModule`（`.wasm` 的 URL）、`mainWorker`（worker 脚本 URL），跨源隔离的 `coi`
 构建还有 `pthreadWorker`。`selectBundle` 是异步的，因为它读取的平台能力是异步的。
 
+```mermaid
+flowchart LR
+    BUN["getJsDelivrBundles 或自己的 URL"] --> SEL["selectBundle(bundles, getPlatformFeatures())"]
+    SEL --> WK["new Worker(bundle.mainWorker)"]
+    WK --> DB["AsyncDuckDB(logger, worker)"]
+    DB --> INST["instantiate(bundle.mainModule, bundle.pthreadWorker)"]
+    INST --> OPEN["open(DuckDBConfig，path = :memory:)"]
+    OPEN --> CONN["connect() → query() 返回 Arrow Table"]
+    REG["registerFileText / FileURL / FileBuffer / OPFS"] --> CONN
+    CONN --> STREAM["startPendingQuery → pollPendingQuery → fetchQueryResults"]
+```
+
 ## 实例化与查询
 
 ```kotlin

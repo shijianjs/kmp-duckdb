@@ -7,6 +7,16 @@ sidebar_position: 2
 `ktjs-apache-arrow` declares the public surface of `apache-arrow@21.2.0`. Arrow is the data format
 DuckDB hands its results back in, so this is the module every result-reading path goes through.
 
+```mermaid
+flowchart LR
+    ARR["typed arrays or plain JS arrays"] --> TFA["tableFromArrays: an interface the caller declares"]
+    TFA --> TBL["Arrow Table"]
+    TBL --> READ["schema.fields / getChildAt(i) / get(row)"]
+    TBL --> IPC["tableToIPC(table) → bytes or a file container"]
+    IPC --> BACK["tableFromIPC: bytes, JSON or the async form"]
+    ENUM["Types.Int32 / TimeUnits.MILLISECOND<br/>value types plus a constants object, never a bare number"] --> TBL
+```
+
 ## Building a table
 
 ```kotlin

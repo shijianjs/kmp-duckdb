@@ -18,6 +18,16 @@ DuckDBNodeApi.DuckDBInstance.create(":memory:")
 `create` 接收文件路径——内存数据库写 `":memory:"`。（用 Kotlin 的 `null` 表示「不要路径」在这里不等价：
 上游会把该参数当作字符串校验。）
 
+```mermaid
+flowchart LR
+    CJS["@duckdb/node-api：CommonJS，导出在运行时才生成"] --> DEF["只取 default export 再类型化"]
+    DEF --> API["DuckDBNodeApi.DuckDBInstance.create(path)"]
+    API --> CONN["instance.connect()"]
+    CONN --> RUN["run / runAndRead / runAndReadAll / runAndReadUntil"]
+    RUN --> ROWS["getRows / getRowObjects / getRowsJson<br/>原生 JS 值，BIGINT 回来是 bigint"]
+    CONN --> PREP["prepare → bind（按位置或按名字）→ run"]
+```
+
 ## 连接与执行
 
 ```kotlin

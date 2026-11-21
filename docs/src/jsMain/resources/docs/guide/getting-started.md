@@ -36,6 +36,15 @@ kotlin {
 (`apache-arrow`, `@duckdb/duckdb-wasm`, `@duckdb/node-api`) is pulled in by the klib metadata, and a
 corporate npm mirror can be configured in the usual way (`npm_config_registry` or `.npmrc`).
 
+```mermaid
+flowchart LR
+    ARROW["ktjs-apache-arrow<br/>the shared vocabulary for reading results"] --> WASM["ktjs-duckdb-wasm<br/>browser"]
+    ARROW --> NODE["ktjs-duckdb-node-neo<br/>the native Node client"]
+    ASSET["wasm + worker staged from dist into duckdb/"] --> WASM
+    WASM --> Q1["query() resolves to an Arrow Table"]
+    NODE --> Q2["runAndReadAll() returns native JS values"]
+```
+
 ## A first browser query
 
 Every method returns a JS `Promise`, so the chain below is the whole flow: instantiate the module,

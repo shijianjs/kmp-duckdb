@@ -24,6 +24,18 @@ A bundle exposes `mainModule` (the `.wasm` URL), `mainWorker` (the worker script
 cross-origin-isolated `coi` build, `pthreadWorker`. `selectBundle` is async because the platform
 features it reads are async.
 
+```mermaid
+flowchart LR
+    BUN["getJsDelivrBundles or your own URLs"] --> SEL["selectBundle(bundles, getPlatformFeatures())"]
+    SEL --> WK["new Worker(bundle.mainWorker)"]
+    WK --> DB["AsyncDuckDB(logger, worker)"]
+    DB --> INST["instantiate(bundle.mainModule, bundle.pthreadWorker)"]
+    INST --> OPEN["open(DuckDBConfig with path = :memory:)"]
+    OPEN --> CONN["connect() → query() resolves to an Arrow Table"]
+    REG["registerFileText / FileURL / FileBuffer / OPFS"] --> CONN
+    CONN --> STREAM["startPendingQuery → pollPendingQuery → fetchQueryResults"]
+```
+
 ## Instantiate and query
 
 ```kotlin
