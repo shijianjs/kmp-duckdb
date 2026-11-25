@@ -79,7 +79,7 @@ demo 的 `duckdbAssets` 任务把 `duckdb-mvp.wasm` / `duckdb-eh.wasm` 与两个
 `docs` 是 Kotlin/JS 模块，`Config.kt` 写站点配置与侧边栏，页面是 Markdown；中文副本放
 `i18n/zh-Hans/docusaurus-plugin-content-docs/current/`，路径与英文一一对应。不用 ktjs-docusaurus 的
 kit bundle：本项目用不到它的落地页组件，去掉后 `docs/build.gradle.kts` 只剩 `sidebarsFunction`，
-也就没有 `extractKitBundle` 与客户端模块那一层。`gradle.properties` 里 `ktjs-docusaurus-kit.version`
+也就没有 `extractKitBundle` 与客户端模块那一层。`gradle/libs.versions.toml` 里 `ktjs-docusaurus-kit`
 因此不再被引用。
 
 `onBrokenLinks = throw` 保留：链接坏掉就地失败比带着坏链上线好。中文页面的 front matter 必须与英文一致
