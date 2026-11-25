@@ -54,7 +54,7 @@ kotlin {
             // `js.objects.unsafeJso` builds the props objects Arrow's factories take
             // (`DataProps`, `BuilderOptions`), and `js.collections.JsMap` is the type of the
             // metadata maps the library hands back. Both live in kotlin-wrappers' `kotlin-js`.
-            api("org.jetbrains.kotlin-wrappers:kotlin-js:2026.11.1")
+            api(libs.kotlin.js)
         }
         jsTest.dependencies {
             implementation(kotlin("test"))
